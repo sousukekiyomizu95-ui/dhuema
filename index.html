@@ -1052,14 +1052,14 @@
             const action = confirmNumberInputBtn.dataset.action;
             if (isNaN(num) || num <= 0) { hideNumberInputModal(); return; }
             
-            const count = Math.min(num, deck.length);
-
             if (action === 'draw' && deck.length > 0) {
+                const count = Math.min(num, deck.length);
                 for(let i=0; i < count; i++) {
                     document.getElementById('hand-zone').appendChild(createCard(deck.pop(), false));
                 }
                 updateDeckDisplay();
             } else if (action === 'reveal' && deck.length > 0) {
+                const count = Math.min(num, deck.length);
                 revealedCards = deck.splice(deck.length - count, count);
                 revealSource = 'top';
                 updateDeckDisplay();
@@ -1067,19 +1067,21 @@
                 refreshRevealModal();
                 revealModal.classList.remove('hidden');
             } else if (action === 'view-bottom' && deck.length > 0) {
-                const bottomCount = Math.min(num, deck.length);
-                revealedCards = deck.splice(0, bottomCount);
+                const count = Math.min(num, deck.length);
+                revealedCards = deck.splice(0, count);
                 revealSource = 'bottom';
                 updateDeckDisplay();
                 selectionOrder = [];
                 refreshRevealModal();
                 revealModal.classList.remove('hidden');
             } else if (action === 'mill' && deck.length > 0) {
+                const count = Math.min(num, deck.length);
                 for(let i=0; i < count; i++) {
                     document.getElementById('graveyard-zone').appendChild(createCard(deck.pop(), false));
                 }
                 updateDeckDisplay();
             } else if (action === 'mana' && deck.length > 0) {
+                const count = Math.min(num, deck.length);
                 const manaZone = document.getElementById('mana-zone');
                 for(let i=0; i < count; i++) {
                     const cardData = deck.pop();
@@ -1089,6 +1091,7 @@
                 }
                 updateDeckDisplay();
             } else if (action === 'shield' && deck.length > 0) {
+                const count = Math.min(num, deck.length);
                 const shieldZone = document.getElementById('shield-zone');
                  for(let i=0; i < count; i++) {
                     const newCard = createCard(deck.pop(), true);
