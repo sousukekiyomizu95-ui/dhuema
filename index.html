@@ -85,7 +85,8 @@
     </div>
 
     <!-- Playmat Area -->
-    <div id="playmat-area" class="hidden">
+    <div id="playmat-area" class="hidden relative">
+        <button id="reset-button" class="absolute top-0 right-0 bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-lg text-sm z-10 m-2">リセット</button>
         <div class="flex flex-col gap-4">
             <div class="relative"><div id="battle-zone" class="zone min-h-[200px]"></div><span class="zone-title">バトルゾーン</span></div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -199,6 +200,7 @@
         const addCardButton = document.getElementById('add-card-button');
         const cardListInput = document.getElementById('card-list');
         const startButton = document.getElementById('start-button');
+        const resetButton = document.getElementById('reset-button');
         const deckCountDisplay = document.getElementById('deck-count');
         const grDeckCountDisplay = document.getElementById('gr-deck-count-display');
         const zones = document.querySelectorAll('.zone');
@@ -257,6 +259,8 @@
             }
         });
         startButton.addEventListener('click', startGame);
+        resetButton.addEventListener('click', resetGame);
+
 
         // --- Card Creation and Management ---
         function updateCardCount() {
@@ -306,6 +310,25 @@
             manualCardQuantityInput.value = '1';
             manualCardNameInput.focus();
             cardListInput.scrollTop = cardListInput.scrollHeight;
+        }
+        
+        function resetGame() {
+            playmatArea.classList.add('hidden');
+            setupArea.style.display = 'block';
+            
+            deck = [];
+            grDeck = [];
+            revealedCards = [];
+            yobunionCards = [];
+            selectionOrder = [];
+            cancelPoisedCard();
+
+            zones.forEach(zone => {
+                zone.innerHTML = '';
+            });
+            
+            updateDeckDisplay();
+            updateGRDeckDisplay();
         }
 
         function startGame() {
